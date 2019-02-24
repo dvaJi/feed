@@ -1,3 +1,9 @@
+interface Image {
+  url: string;
+  mime?: string;
+  size?: number;
+}
+
 interface Item {
   title: string;
   id?: string;
@@ -9,7 +15,7 @@ interface Item {
 
   guid?: string;
 
-  image?: string;
+  image?: Image;
 
   author?: Author[];
   contributor?: Author[];
@@ -33,7 +39,7 @@ interface FeedOptions {
   generator?: string;
 
   feed: string;
-  feedLinks: any;
+  feedLinks?: any;
   hub?: string;
 
   author?: Author;
@@ -54,5 +60,5 @@ interface Feed {
 
 interface Extension {
   name: string;
-  objects: string;
+  objects: { [name: string]: string };
 }

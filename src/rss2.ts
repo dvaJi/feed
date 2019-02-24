@@ -101,9 +101,9 @@ export default (ins: Feed) => {
     }
 
     if (entry.guid) {
-      item.push({ guid: entry.guid });
+      item.push({ guid: [{ _attr: { isPermaLink: "true" } }, entry.guid] });
     } else if (entry.link) {
-      item.push({ guid: entry.link });
+      item.push({ guid: [{ _attr: { isPermaLink: "true" } }, entry.link] });
     }
 
     if (entry.date) {
@@ -131,7 +131,15 @@ export default (ins: Feed) => {
     }
 
     if (entry.image) {
-      item.push({ enclosure: [{ _attr: { url: entry.image } }] });
+      item.push({ enclosure: [{ _attr: { ...entry.image } }] });
+    }
+
+    if (entry.extensions) {
+      entry.extensions.forEach((e: Extension) => {
+        Object.keys(e.objects).forEach(obj => {
+          item.push({ [obj]: e.objects[obj] });
+        });
+      });
     }
 
     channel.push({ item });
